@@ -1,12 +1,21 @@
-from flask import Flask
 import os
+from flask import Flask
+from flask.ext.sqlalchemy import SQLAlchemy
 
-app = Flask(__name__)
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-@app.route('/')
-def homepage():
-    return "Hi there, how are you?"
+app = Flask(__name__,instance_relative_config=True)
 
+app.config.from_object('config.default')
 
-if __name__ == "__main__":
-    app.run(host = os.getenv('IP','0.0.0.0'), port = int(os.getenv('PORT',8080)),debug = True)
+app.config.from_pyfile('config.py')
+
+# app.config.from_envvar('APP_CONFIG_FILE')
+
+db = SQLAlchemy(app)
+
+from .views import home
+from .views.profile import profile
+from . import models
+app.register_blueprint(profile,url_prefix='/<user_url_slug>')
+
