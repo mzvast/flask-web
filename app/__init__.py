@@ -17,5 +17,7 @@ db = SQLAlchemy(app)
 from .views import home
 from .views.profile import profile
 from . import models
-app.register_blueprint(profile,url_prefix='/<user_url_slug>')
+
+# bluePrint register
+# app.register_blueprint(profile,url_prefix='/<user_url_slug>')
 

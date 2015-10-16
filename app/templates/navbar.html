@@ -1,5 +1,5 @@
     <!-- Fixed navbar -->
-    <nav class="navbar navbar-default navbar-fixed-top">
+    <nav class="navbar navbar-default navbar-static-top">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -8,11 +8,13 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">牵手东大</a>
+          <a class="navbar-brand" href="/">
+            <img style="max-width:120px;margin-top:-7px;" src="{{url_for('static',filename='img/brand_logo.png')}}"></img>
+          </a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">主页</a></li>
+            <li><a href="/">主页</a></li>
             <li><a href="#about">关于</a></li>
             <li><a href="#contact">联系我们</a></li>
             <!--<li class="dropdown">-->
@@ -28,19 +30,30 @@
             <!--  </ul>-->
             <!--</li>-->
           </ul>
+      
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="../navbar/">注册</a></li>
+            {% if session.logged_in %}
+            <li><a href="#profile">
+            <span class="glyphicon glyphicon-user"\
+              aria-hidden="true"></span>&nbsp;&nbsp;{{session.username}}
+              </a></li>
+              
+            <li><a href="{{ url_for('logout') }}">
+              <span class="glyphicon glyphicon-log-out"\
+              aria-hidden="true"></span>&nbsp;&nbsp;注销</a></li>
+            {% else %}
+            <li><a href="{{ url_for('register') }}">
+              注册</a></li>
+           {% endif %}
            
           </ul>
-             <form class='navbar-form navbar-right' method='POST' action=''>
-                <div class='form-group'>
-                  <input type="text" class='form_control' name="username" placeholder='Username'/>
-                </div>
-                <div class='form-group'>
-                  <input type="password" class='form_control' name="password" placeholder='Password'/>
-                </div>
-                  <button type="submit" class='btn btn-default'>登陆</button>
+          {% if not session.logged_in %}
+             <form class='navbar-form navbar-right' method='POST' action="{{ url_for('login') }}">
+        			<input type="text" class="form-control" placeholder = "用户名" name="username" value="{{request.form.username}}">
+        			<input type="password" class="form-control" placeholder = "密码" name="password" value="{{request.form.password}}">
+        			<input class="btn btn-default" type="submit" value="登陆">
             </form>
+            {% endif %}
         </div><!--/.nav-collapse -->
       </div>
     </nav>

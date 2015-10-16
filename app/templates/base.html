@@ -8,31 +8,61 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../../favicon.ico">
+  
 
     <title>{% block head_title %}牵手东大{% endblock%}</title>
 
     {% include 'head_css.html' %}
-
+    
+    
+      <style>
+         {% block style %}
+         {% endblock %}
+         
+        .navbar-static-top {
+          margin-bottom: 0px !important;
+        }       
+      
+        #flash_global{
+          margin-bottom: 0px !important;
+        } 
+      
+      </style> 
+     
+     
   </head>
 
   <body>
     {% include 'navbar.html' %}
     
+     <!--flash messages-->
+        {% with messages = get_flashed_messages() %}
+         {% if messages %}
+           {% for message in messages%}
+             <div class="alert alert-warning alert-dismissible" role="alert"\
+             id="flash_global" >
+               <button type="button" class="close" data-dismiss="alert" \
+               aria-label="Close"><span aria-hidden="true">&times;</span></button>
+               {{message}}
+             </div>
+           {% endfor%}
+         {% endif%}
+       {% endwith%}
+     <!--end flash messages-->  
+     
+    <!--jumbotron content-->
     {% block jumbotron %}
     {% endblock  %}
-
-    <div class="container">
-       <!-- Main component for a primary marketing message or call to action --> 
-       
+    <!--end jumbotron content-->
+    
+    <div class="container" >
+       <!-- Main content --> 
         {% block content %}
         {% endblock %}
-
-      
-
-    
+        <!--end Main content-->
     </div> <!-- /container -->
 
     {% include 'javascript.html' %}
+    {% include 'modals.html' %}
   </body>
 </html>

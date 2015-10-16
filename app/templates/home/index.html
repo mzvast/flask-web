@@ -1,6 +1,16 @@
 {% extends 'base.html' %}
 
-{% block head_title %}欢迎 | {{ super }}{% endblock %}
+{% block head_title %}欢迎 | {{ super() }}{% endblock %}
+
+<style>
+{% block style %}
+
+/*.jumbotron {*/
+/*	background-color:#0E3D14;*/
+/*	color: #FFF;*/
+/*}*/
+{% endblock %}
+</style>
 
   {% block jumbotron %}
     <div class="jumbotron">
@@ -10,7 +20,7 @@
       		<h1>牵手东大</h1>
       		<p>The MVP Landing project is designed to get your project started. The goal is to help you launch as soon as possible with the least amount of investment using time or money. Join Us today.</p>
       		<p>
-      		<a class="btn btn-lg btn-primary" href="" role="button">加入我们 &raquo;</a>
+      		<a class="btn btn-lg btn-primary" href="{{ url_for('register') }}" role="button">加入我们 &raquo;</a>
       		</p>
       		</div>
       		<div class='col-sm-6' >
